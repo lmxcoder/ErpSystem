@@ -6,9 +6,7 @@ import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * <p>
@@ -43,5 +41,15 @@ public class UserController {
         model.addAttribute("username", username);
         model.addAttribute("fullName", fullName);
         return "user-list";
+    }
+
+    /**
+     * 删除 异步
+     */
+    @RequestMapping("delete/{userId}")
+    @ResponseBody
+    public boolean delete(@PathVariable String userId) {
+        boolean b = userService.removeById(userId);
+        return b;
     }
 }

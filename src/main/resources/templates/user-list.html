@@ -10,6 +10,7 @@
         <link rel="stylesheet" th:href="@{/css/xadmin.css}">
         <script th:src="@{/lib/layui/layui.js}" charset="utf-8"></script>
         <script type="text/javascript" th:src="@{/js/xadmin.js}"></script>
+        <script type="text/javascript" th:src="@{/js/axios.min.js}"></script>
         <!--[if lt IE 9]>
           <script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
           <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
@@ -71,7 +72,7 @@
                                     <a title="编辑"  onclick="xadmin.open('编辑','admin-edit.html')" href="javascript:;">
                                       <i class="layui-icon">&#xe642;</i>
                                     </a>
-                                    <a title="删除" onclick="member_del(this,'要删除的id')" href="javascript:;">
+                                    <a title="删除" th:onclick="|member_del(this,${user.userId})|" href="javascript:;">
                                       <i class="layui-icon">&#xe640;</i>
                                     </a>
                                   </td>
@@ -83,8 +84,8 @@
                             <div class="page">
                                 <div>
                                   <a class="prev" href="/user/list?pageNum=1">首页</a>
-                                  <a class="num" th:href="|/user/list?pageNum=${pageInfo.prePage}|">上一页</a>
-                                  <a class="num" th:href="|/user/list?pageNum=${pageInfo.nextPage}|">下一页</a>
+                                  <a class="num" th:if="${pageInfo.hasPreviousPage}" th:href="|/user/list?pageNum=${pageInfo.prePage}|">上一页</a>
+                                  <a class="num" th:if="${pageInfo.hasNextPage}" th:href="|/user/list?pageNum=${pageInfo.nextPage}|">下一页</a>
                                   <a class="next" th:href="|/user/list?pageNum=${pageInfo.pages}|">尾页</a>
                                 </div>
                             </div>
@@ -137,9 +138,19 @@
       /*用户-删除*/
       function member_del(obj,id){
           layer.confirm('确认要删除吗？',function(index){
-              //发异步删除数据
-              $(obj).parents("tr").remove();
-              layer.msg('已删除!',{icon:1,time:1000});
+              // 发送异步删除数据
+              axios.delete('/user/delete/'+id,{}).then(res => {
+                  if (res.data == true){
+                      layer.msg('已删除!',{icon:1, time:1000});
+                  } else {
+                      layer.msg('删除失败!', {icon:2, time:1000});
+                  }
+                  window.setTimeout(()=>{
+                      location.reload()
+                  }, 1000)
+              })
+
+              // layer.msg('已删除!',{icon:1,time:1000});
           });
       }
 
