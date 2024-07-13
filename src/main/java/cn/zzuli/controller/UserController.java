@@ -1,5 +1,6 @@
 package cn.zzuli.controller;
 
+import cn.zzuli.entity.User;
 import cn.zzuli.service.BooksService;
 import cn.zzuli.service.UserService;
 import com.github.pagehelper.PageInfo;
@@ -51,5 +52,20 @@ public class UserController {
     public boolean delete(@PathVariable String userId) {
         boolean b = userService.removeById(userId);
         return b;
+    }
+
+    // 转向增加
+    @RequestMapping("/toAdd")
+    public String toAdd() {
+        return "user-add";
+    }
+
+    // 增加
+    @RequestMapping("/save")
+    @ResponseBody
+    public boolean save(@RequestBody User user) {
+        // 初始化密码
+        user.setPassword("123456");
+        return userService.save(user);
     }
 }
