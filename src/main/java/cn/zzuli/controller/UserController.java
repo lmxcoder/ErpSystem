@@ -4,6 +4,7 @@ import cn.zzuli.entity.User;
 import cn.zzuli.service.BooksService;
 import cn.zzuli.service.UserService;
 import com.github.pagehelper.PageInfo;
+import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -58,14 +59,27 @@ public class UserController {
     @RequestMapping("/toAdd")
     public String toAdd() {
         return "user-add";
-    }
-
-    // 增加
+    }   // 增加
     @RequestMapping("/save")
     @ResponseBody
     public boolean save(@RequestBody User user) {
         // 初始化密码
         user.setPassword("123456");
         return userService.save(user);
+    }
+
+    // 去修改
+    @RequestMapping("/toEdit/{userId}")
+    public String toEdit(Model model, @PathVariable String userId) {
+        User user = userService.getById(userId);
+        model.addAttribute("user", user); // 传给前端
+        return "user-edit";
+    }
+
+    // 修改
+    @RequestMapping("/update")
+    @ResponseBody
+    public boolean update(@RequestBody User user) {
+        return userService.updateById(user);
     }
 }
