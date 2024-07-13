@@ -3,6 +3,7 @@ package cn.zzuli.controller;
 import cn.zzuli.entity.User;
 import cn.zzuli.service.BooksService;
 import cn.zzuli.service.UserService;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.pagehelper.PageInfo;
 import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -81,5 +82,22 @@ public class UserController {
     @ResponseBody
     public boolean update(@RequestBody User user) {
         return userService.updateById(user);
+    }
+
+    // 登录
+    @RequestMapping("/checkLogin")
+    @ResponseBody
+    public User checkLogin(@RequestBody User user) {
+        // 根据账号密码查询
+        QueryWrapper<User> wrapper = new QueryWrapper<>();
+        wrapper.eq("username", user.getUsername());
+        wrapper.eq("password", user.getPassword());
+        User u = userService.getOne(wrapper);
+
+//        脱敏处理
+        if (u != null) {
+            u.setPassword("");
+        }
+        return u;
     }
 }
