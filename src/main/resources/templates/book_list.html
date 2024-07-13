@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>My_book_list</title>
+    <style>
+      body{
+        background: url("/imgs/vt.png");
+        background-size: 100%;
+        background-repeat: no-repeat;
+      }
+    </style>
+    <script>
+      function add(){
+        location = "/books/toSave";
+      }
+      function del(bookId){
+        if (confirm("你确定删除吗？")){
+          // 向后台发送删除的指令
+          //alert(bookId);
+          location = "/books/delete/"+bookId;
+        }
+      }
+      function mod(bookId){
+        location = "/books/queryBookById/"+bookId;
+      }
+    </script>
+</head>
+
+<body>
+<div style="width: 90%; margin: 0 auto">
+    <br><br>
+    <button onclick="add()">增加</button>
+    <br><br>
+    <form action="/books/list" method="post">
+      书名：<input type="text" name="title" placeholder="模糊查询" th:value="${title}">
+      作者：<input type="text" name="author" placeholder="模糊查询" th:value="${author}">
+      出版日期：<input type="text" name="publicationDate" placeholder="精准查询" th:value="${publicationDate}">
+      <button>快捷查询</button>
+    </form>
+    <br><br>
+<!--    <span th:text="${pageInfo}"></span>-->
+    <table border = "1" cellspacing="0" cellpadding="5" width = "100%" >
+      <tr>
+        <th>序号</th>
+        <th>书名</th>
+        <th>作者</th>
+        <th>出版日期</th>
+        <th>ISBN号</th>
+        <th>类型</th>
+        <th>语言</th>
+        <th>操作</th>
+      </tr>
+      <tr align = "center" th:each="book, index : ${pageInfo.list}">
+        <td th:text = "${index.count}"></td>
+        <td th:text = "${book.title}"></td>
+        <td th:text = "${book.author}"></td>
+        <td th:text = "${book.publicationDate}"></td>
+        <td th:text = "${book.isbn}"></td>
+        <td th:text = "${book.genre}"></td>
+        <td th:text = "${book.language}"></td>
+        <td>
+          <a th:href="|/books/queryBookById/${book.bookId}|">修改1</a>
+          <a href="#" th:onclick="|mod(${book.bookId})|">修改2</a>
+          <a href="javascript:void(0)" th:onclick="|del(${book.bookId})|">删除</a>
+        </td>
+      </tr>
+    </table>
+    <br><br><br>
+    <a href="/books/list?pageNum=1">首页</a>
+    <a th:href="|/books/list?pageNum=${pageInfo.prePage}|">上一页</a>
+    <a th:href="|/books/list?pageNum=${pageInfo.nextPage}|">下一页</a>
+    <a th:href="|/books/list?pageNum=${pageInfo.pages}|">尾页</a>
+</div>
+</body>
+</html>

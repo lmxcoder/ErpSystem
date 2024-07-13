@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>book_update</title>
+</head>
+<body>
+    <form action="/books/update" method="post">
+<!--        修改和增加不一样的地方是在修改的页面中，必须存在一个ID传递到后端，增加不需要是因为新数据ID是自增的-->
+<!--        所以子啊查询数据页面中能给我们要在表单中隐藏一个id传递到后端-->
+        <input type="hidden" name="bookId" th:value="${bookId}">
+
+        书名：<input type="text" name="title" th:value="${book.title}"> <br>
+        作者：<input type="text" name="author" th:value="${book.author}"> <br>
+        出版日期：<input type="text" name="publicationDate" th:value="${book.publicationDate}"> <br>
+        书号：<input type="text" name="isbn" th:value="${book.isbn}"> <br>
+        类型：<input type="text" name="genre" th:value="${book.genre}"> <br>
+        语言：<input type="text" name="language" th:value="${book.language}"> <br>
+        <button style = "color:blueviolet">更新</button>
+    </form>
+</body>
+</html>
