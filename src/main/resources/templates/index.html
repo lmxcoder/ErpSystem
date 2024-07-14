@@ -18,8 +18,12 @@
           <script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
         <![endif]-->
         <script>
-            // 是否开启刷新记忆tab功能
-            // var is_remember = false;
+            function logout(){
+                // 清理前端存储的数据
+                sessionStorage.clear();
+                // 跳转
+                location = "/login"
+            }
         </script>
     </head>
     <body class="index">
@@ -55,7 +59,7 @@
             </ul>
             <ul class="layui-nav right" lay-filter="">
                 <li class="layui-nav-item">
-                    <a href="javascript:;">admin</a>
+                    <a href="javascript:;" id="xx">admin</a>
                     <dl class="layui-nav-child">
                         <!-- 二级菜单 -->
                         <dd>
@@ -63,7 +67,7 @@
                         <dd>
                             <a onclick="xadmin.open('切换帐号','http://www.baidu.com')">切换帐号</a></dd>
                         <dd>
-                            <a href="login.html">退出</a></dd>
+                            <a href="javascript:void(0)" onclick="logout()">退出</a></dd>
                     </dl>
                 </li>
                 <li class="layui-nav-item to-index">
@@ -87,6 +91,26 @@
                                 <a onclick="xadmin.add_tab('用户信息','/user/list')">
                                     <i class="iconfont">&#xe6a7;</i>
                                     <cite>用户信息</cite></a>
+                            </li>
+
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="javascript:;">
+                            <i class="iconfont left-nav-li" lay-tips="产品管理">&#xe726;</i>
+                            <cite>产品管理</cite>
+                            <i class="iconfont nav_right">&#xe697;</i></a>
+                        <ul class="sub-menu">
+                            <li>
+                                <a onclick="xadmin.add_tab('产品分类信息','/productCategory/list')">
+                                    <i class="iconfont">&#xe6a7;</i>
+                                    <cite>产品分类信息</cite></a>
+                            </li>
+                            <li>
+                                <a onclick="xadmin.add_tab('产品信息','/productInfo/list')">
+                                    <i class="iconfont">&#xe6a7;</i>
+                                    <cite>产品信息</cite></a>
                             </li>
 
                         </ul>
@@ -121,13 +145,31 @@
         <style id="theme_style"></style>
         <!-- 右侧主体结束 -->
         <!-- 中部结束 -->
+        <script>
+            // 先判断是否为空
+            let user = JSON.parse(sessionStorage.getItem("user"));
+            if (user == null || user =='') {
+                alert("非法入侵！！！！")
+                alert("现宣布剥夺你的所有权力!");
+                alert("并对你进行封印缉捕！！！！");
+                alert("束手就擒叭！！！！");
+                location = "/login";
+
+            }
+
+            // admin 转化成 user.fullname
+            let fullName = JSON.parse(sessionStorage.getItem("user")).fullName;
+            // alert(fullName)
+            document.getElementById("xx").innerText = fullName;
+        </script>
         <script>//百度统计可去掉
             var _hmt = _hmt || []; (function() {
                 var hm = document.createElement("script");
                 hm.src = "https://hm.baidu.com/hm.js?b393d153aeb26b46e9431fabaf0f6190";
                 var s = document.getElementsByTagName("script")[0];
                 s.parentNode.insertBefore(hm, s);
-            })();</script>
+            })();
+        </script>
     </body>
 
 </html>

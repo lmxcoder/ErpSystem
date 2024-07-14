@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.zzuli.mapper.ProductInfoMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="cn.zzuli.entity.ProductInfo">
+        <id column="product_id" property="productId" />
+        <result column="product_name" property="productName" />
+        <result column="description" property="description" />
+        <result column="price" property="price" />
+        <result column="category_id" property="categoryId" />
+        <result column="manufacturer" property="manufacturer" />
+        <result column="inventory" property="inventory" />
+        <result column="release_date" property="releaseDate" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        product_id, product_name, description, price, category_id, manufacturer, inventory, release_date
+    </sql>
+
+</mapper>
