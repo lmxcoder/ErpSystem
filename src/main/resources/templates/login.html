@@ -44,7 +44,7 @@
               //监听提交
               form.on('submit(login)', function(data){
                   axios.post('/user/checkLogin', data.field).then(res =>{
-                      console.log(res)
+                      // console.log(res)
                       if (res.data == ''){
                           layer.msg('账号或密码错误，请重新登陆！',{icon:2, time:1000});
                       } else {

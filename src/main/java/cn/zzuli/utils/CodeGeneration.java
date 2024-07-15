@@ -30,7 +30,6 @@ public class CodeGeneration {
         //通过datasourceConfig创建AutoGenerator
         AutoGenerator generator = new AutoGenerator(dsc);
 
-
         Scanner scanner = new Scanner(System.in);
         System.out.println("代码生成的绝对路径(右键项目->copy path)：");
         String projectPath = scanner.next();
