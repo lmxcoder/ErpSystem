@@ -40,7 +40,7 @@ public class ProductInfo implements Serializable {
     private String productName;
 
     /**
-     * 产品描述
+ * 产品描述
      */
     @TableField("description")
     private String description;

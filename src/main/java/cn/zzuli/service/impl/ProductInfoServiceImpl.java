@@ -53,7 +53,7 @@ public class ProductInfoServiceImpl extends ServiceImpl<ProductInfoMapper, Produ
         productInfoList.forEach(productInfo -> {
             ProductCategory productCategory = productCategoryMapper.selectById(productInfo.getCategoryId());
             // 对象存入
-//            productInfo
+            productInfo.setProductCategory(productCategory);
         });
 
         return new PageInfo(productInfoList);

@@ -34,10 +34,10 @@
                         <div class="layui-card-body ">
                             <form class="layui-form layui-col-space5" action="/productInfo/list">
                                 <div class="layui-inline layui-show-xs-block">
-                                    <input type="text" name="username"  placeholder="请输入产品名称" autocomplete="off" th:value="${productName}" class="layui-input">
+                                    <input type="text" name="productName"  placeholder="请输入产品名称" autocomplete="off" th:value="${productName}" class="layui-input">
                                 </div>
                                 <div class="layui-inline layui-show-xs-block">
-                                    <input type="text" name="fullName"  placeholder="请输入" autocomplete="off" th:value="${releaseDate}" class="layui-input">
+                                    <input type="text" name="releaseDate"  placeholder="请输入上市日期" autocomplete="off" th:value="${releaseDate}" class="layui-input">
                                 </div>
                                 <div class="layui-inline layui-show-xs-block">
                                     <button class="layui-btn"  lay-submit="" lay-filter="sreach"><i class="layui-icon">&#xe615;</i></button>
@@ -46,31 +46,30 @@
                         </div>
                         <div class="layui-card-header">
                             <button class="layui-btn layui-btn-danger" onclick="delAll()"><i class="layui-icon"></i>批量删除</button>
-                            <button class="layui-btn" onclick="xadmin.open('添加用户','/productInfo/toAdd',600,450)"><i class="layui-icon"></i>添加</button>
+                            <button class="layui-btn" onclick="xadmin.open('添加产品','/productInfo/toAdd',600,450)"><i class="layui-icon"></i>添加</button>
                         </div>
                         <div class="layui-card-body ">
                             <table class="layui-table layui-form">
                               <thead>
                                 <tr>
-                                    <th>序号</th>
-                                    <th>产品ID</th>
-                                    <th>产品名称</th>
-                                    <th>产品描述</th>
-                                    <th>产品价格</th>
-                                    <th>产品分类ID</th>
-                                    <th>制造商</th>
-                                    <th>库存量</th>
+                                  <th>序号</th>
+                                  <th>产品名称</th>
+                                  <th>产品描述</th>
+                                  <th>产品价格</th>
+                                  <th>产品分类</th>
+                                  <th>制造商</th>
+                                  <th>库存量</th>
                                     <th>上市日期</th>
+                                    <th>操作</th>
                               </thead>
                               <tbody>
                                 <tr th:each="productInfo, index: ${pageInfo.list}">
-                                    <td th:text="${index.count}"></td>
-                                    <td th:text="${productInfo.productId}"></td>
-                                    <td th:text="${productInfo.productName}"></td>
-                                    <td th:text="${productInfo.description}"></td>
-                                    <td th:text="${productInfo.price}"></td>
-                                    <td th:text="${productInfo.categoryId}"></td>
-                                    <td th:text="${productInfo.manufacturer}"></td>
+                                  <td th:text="${index.count}"></td>
+                                  <td th:text="${productInfo.productName}"></td>
+                                  <td th:text="${productInfo.description}"></td>
+                                  <td th:text="${productInfo.price}"></td>
+                                  <td th:text="${productInfo.productCategory.categoryName}"></td>
+                                  <td th:text="${productInfo.manufacturer}"></td>
                                     <td th:text="${productInfo.inventory}"></td>
                                     <td th:text="${productInfo.releaseDate}"></td>
                                   <td class="td-manage">
@@ -88,7 +87,7 @@
                         <div class="layui-card-body ">
                             <div class="page">
                                 <div>
-                                  <a class="prev" href="/user/list?pageNum=1">首页</a>
+                                  <a class="prev" href="/productInfo/list?pageNum=1">首页</a>
                                   <a class="num" th:if="${pageInfo.hasPreviousPage}" th:href="|/productInfo/list?pageNum=${pageInfo.prePage}|">上一页</a>
                                   <a class="num" th:if="${pageInfo.hasNextPage}" th:href="|/productInfo/list?pageNum=${pageInfo.nextPage}|">下一页</a>
                                   <a class="next" th:href="|/productInfo/list?pageNum=${pageInfo.pages}|">尾页</a>

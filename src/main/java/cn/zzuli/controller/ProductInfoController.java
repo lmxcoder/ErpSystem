@@ -56,8 +56,8 @@ public class ProductInfoController {
      */
     @RequestMapping("delete/{productInfoId}")
     @ResponseBody
-    public boolean delete(@PathVariable String userId) {
-        boolean b = productInfoService.removeById(userId);
+    public boolean delete(@PathVariable String productInfoId) {
+        boolean b = productInfoService.removeById(productInfoId);
         return b;
     }
 
@@ -66,21 +66,26 @@ public class ProductInfoController {
     public String toAdd(Model model) {
         List<ProductCategory> categoryList = productCategoryService.list();
         model.addAttribute("categoryList", categoryList);
-        return "user-add";
+        return "product-info-add";
     }   // 增加
+
+
     @RequestMapping("/save")
     @ResponseBody
     public boolean save(@RequestBody ProductInfo productInfo) {
-        // 初始化密码
         return productInfoService.save(productInfo);
     }
 
     // 去修改
-    @RequestMapping("/toEdit/{userId}")
-    public String toEdit(Model model, @PathVariable String userId) {
-        ProductInfo productInfo = productInfoService.getById(userId);
+    @RequestMapping("/toEdit/{productInfoId}")
+    public String toEdit(Model model, @PathVariable String productInfoId) {
+
+        List<ProductCategory> categoryList = productCategoryService.list();
+        model.addAttribute("categoryList", categoryList);
+
+        ProductInfo productInfo = productInfoService.getById(productInfoId);
         model.addAttribute("productInfo", productInfo); // 传给前端
-        return "user-edit";
+        return "product-info-edit";
     }
 
     // 修改
